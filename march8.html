@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>8 Марта — 11 Ә</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Pattaya&display=swap" rel="stylesheet">
+    <style>
+        /* Убираем выделение текста при долгом нажатии (важно для iOS) */
+        * {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            user-select: none;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #fff5f7;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .bg-gradient {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, #ff9a9e 0%, #fecfef 100%);
+            z-index: -1;
+        }
+
+        #card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 40px 20px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(216, 27, 96, 0.15);
+            width: 85%;
+            max-width: 400px;
+            text-align: center;
+            z-index: 100;
+        }
+
+        h1 {
+            font-family: 'Pattaya', sans-serif;
+            color: #d81b60;
+            font-size: 22px;
+            margin-bottom: 25px;
+            pointer-events: none;
+        }
+
+        #yes-btn {
+            background: linear-gradient(to right, #ff0055, #ff5e62);
+            color: white;
+            padding: 20px;
+            border: none;
+            border-radius: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            display: block;
+            box-shadow: 0 8px 15px rgba(255, 0, 85, 0.2);
+            /* Магия для iOS Safari */
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        #yes-btn:active {
+            transform: scale(0.96);
+            opacity: 0.9;
+        }
+
+        #final-screen { display: none; }
+
+        .photo-frame img {
+            width: 100%;
+            max-width: 280px;
+            border-radius: 15px;
+            margin-top: 15px;
+            border: 2px solid #ff0055;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .floating-heart {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            animation: fly 4s linear forwards;
+        }
+
+        @keyframes fly {
+            0% { transform: translateY(105vh) scale(0.5); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-gradient"></div>
+
+<div id="card">
+    <div id="step-content">
+        <h1 id="question-text">Приветик! 🌷<br>Хотите узнать, что мы подготовили для вас?</h1>
+        <button id="yes-btn" onclick="handleYes()">ДА, КОНЕЧНО! ✨</button>
+    </div>
+
+    <div id="final-screen">
+        <h1 style="font-family: 'Pacifico', cursive; font-size: 26px;">С 8 Марта! ✨</h1>
+        <p style="font-size: 16px; color: #444;">Ждем вас по адресу: <br> <strong>Дом напротив дома Ляйсан!</strong></p>
+        
+        <div class="photo-frame">
+            <a href="card.png" target="_blank">
+                <img src="card.png" alt="Открытка 11 Ә">
+            </a>
+        </div>
+        <p style="font-weight: bold; color: #ff0055; margin-top: 15px;">Ваш 11 "Ә" 😎</p>
+    </div>
+</div>
+
+<audio id="success-sound" preload="auto">
+    <source src="https://www.myinstants.com/media/sounds/tada.mp3" type="audio/mpeg">
+</audio>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+<script>
+    let currentStep = 0;
+    const questions = [
+        "Вы точно-точно уверены? 🤔",
+        "Обещаете, что вам понравится? 😉",
+        "Тогда жмите последний раз! 👇"
+    ];
+
+    function handleYes() {
+        const btn = document.getElementById('yes-btn');
+        const text = document.getElementById('question-text');
+        const sound = document.getElementById('success-sound');
+
+        // Для iOS: пытаемся "разбудить" аудио движок первым же кликом
+        sound.play().then(() => {
+            sound.pause();
+            sound.currentTime = 0;
+        }).catch(() => {});
+
+        if (currentStep < questions.length) {
+            // Эффект нажатия
+            confetti({ 
+                particleCount: 40, 
+                spread: 50, 
+                origin: { y: 0.8 },
+                disableForReducedMotion: true 
+            });
+
+            text.innerText = questions[currentStep];
+            currentStep++;
+        } else {
+            showFinal();
+        }
+    }
+
+    function showFinal() {
+        document.getElementById('step-content').style.display = 'none';
+        document.getElementById('final-screen').style.display = 'block';
+        
+        // Звук финала
+        const sound = document.getElementById('success-sound');
+        sound.play().catch(e => console.log("Safari sound block"));
+
+        // Мощный финал конфетти (адаптировано)
+        const duration = 4 * 1000;
+        const end = Date.now() + duration;
+
+        (function frame() {
+            confetti({ particleCount: 2, angle: 60, spread: 55, origin: { x: 0, y: 0.7 } });
+            confetti({ particleCount: 2, angle: 120, spread: 55, origin: { x: 1, y: 0.7 } });
+            if (Date.now() < end) requestAnimationFrame(frame);
+        }());
+
+        setInterval(spawnHeart, 400);
+    }
+
+    function spawnHeart() {
+        const heart = document.createElement('div');
+        heart.className = 'floating-heart';
+        heart.innerText = '❤️';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 4000);
+    }
+</script>
+
+</body>
+</html>
