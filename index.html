@@ -3,195 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>8 Марта — 11 Ә</title>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Pattaya&display=swap" rel="stylesheet">
+    <title>Для моей самой особенной ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Caveat:wght@700&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
     <style>
-        /* Убираем выделение текста при долгом нажатии (важно для iOS) */
-        * {
-            -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none;
-            user-select: none;
+        :root {
+            --rose: #ffafbd;
+            --gold: #d4af37;
+            --soft-white: #fffafa;
         }
+
+        * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
 
         body {
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background: #fff5f7;
-            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
+            font-family: 'Montserrat', sans-serif;
             overflow: hidden;
         }
 
-        .bg-gradient {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(45deg, #ff9a9e 0%, #fecfef 100%);
-            z-index: -1;
-        }
-
         #card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            padding: 40px 20px;
-            border-radius: 30px;
-            box-shadow: 0 15px 35px rgba(216, 27, 96, 0.15);
-            width: 85%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 40px 25px;
+            border-radius: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 90%;
             max-width: 400px;
             text-align: center;
-            z-index: 100;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            z-index: 10;
+            transition: all 0.5s ease;
         }
 
         h1 {
-            font-family: 'Pattaya', sans-serif;
-            color: #d81b60;
-            font-size: 22px;
-            margin-bottom: 25px;
-            pointer-events: none;
+            font-family: 'Pacifico', cursive;
+            color: #d4418e;
+            font-size: 26px;
+            margin-bottom: 20px;
+            line-height: 1.4;
         }
 
-        #yes-btn {
-            background: linear-gradient(to right, #ff0055, #ff5e62);
+        .message-text {
+            font-family: 'Caveat', cursive;
+            font-size: 28px;
+            color: #555;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        #action-btn {
+            background: linear-gradient(45deg, #ff6a88, #ff99ac);
             color: white;
-            padding: 20px;
             border: none;
-            border-radius: 20px;
-            font-size: 20px;
-            font-weight: bold;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
             cursor: pointer;
             width: 100%;
-            display: block;
-            box-shadow: 0 8px 15px rgba(255, 0, 85, 0.2);
-            /* Магия для iOS Safari */
-            appearance: none;
-            -webkit-appearance: none;
+            box-shadow: 0 10px 20px rgba(255, 106, 136, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        #yes-btn:active {
-            transform: scale(0.96);
-            opacity: 0.9;
+        #action-btn:active { transform: scale(0.95); }
+
+        #final-screen { display: none; opacity: 0; transition: opacity 1s ease; }
+
+        .photo-container {
+            margin: 20px auto;
+            position: relative;
+            width: 220px;
+            height: 220px;
         }
 
-        #final-screen { display: none; }
-
-        .photo-frame img {
+        .photo-container img {
             width: 100%;
-            max-width: 280px;
-            border-radius: 15px;
-            margin-top: 15px;
-            border: 2px solid #ff0055;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 8px solid white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
         }
 
-        .floating-heart {
+        .b-day-note {
+            font-size: 14px;
+            color: #d4418e;
+            font-weight: bold;
+            margin-top: 10px;
+            background: #fff0f5;
+            padding: 5px 10px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        .floating-element {
             position: fixed;
             pointer-events: none;
             z-index: 1;
-            animation: fly 4s linear forwards;
+            animation: floatUp 5s linear forwards;
         }
 
-        @keyframes fly {
-            0% { transform: translateY(105vh) scale(0.5); opacity: 1; }
-            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
-<div class="bg-gradient"></div>
-
 <div id="card">
-    <div id="step-content">
-        <h1 id="question-text">Привет кыздарики! 🌷<br> вы точно хотите узнать что мы приготовили для вас?</h1>
-        <button id="yes-btn" onclick="handleYes()">ДА, КОНЕЧНО! ✨</button>
+    <div id="interactive-part">
+        <h1 id="title-text">Поздравляю с 8 Марта! ❤️</h1>
+        <div class="message-text" id="main-message">Нажми на кнопку, у меня есть кое-что для тебя...</div>
+        <button id="action-btn" onclick="nextStep()">Продолжить ✨</button>
     </div>
 
     <div id="final-screen">
-        <h1 style="font-family: 'Pacifico', cursive; font-size: 26px;">С 8 Марта! ✨</h1>
-        <p style="font-size: 16px; color: #444;">Ждем вас по адресу: <br> <strong>Төле би 8! время:Ифтара</strong></p>
+        <h1 style="font-size: 22px;">С праздником, любимая! 🌷</h1>
+        <p style="color: #666; font-size: 15px;">Ты делаешь этот мир ярче. Пусть каждый твой день будет полон тепла!</p>
         
-        <div class="photo-frame">
-            <a href="card.png" target="_blank">
-                <img src="card.png" alt="Открытка 11 Ә">
-            </a>
+        <div class="photo-container">
+            <img src="card.png" alt="Наша фотография">
         </div>
-        <p style="font-weight: bold; color: #ff0055; margin-top: 15px;">Ваш 11 "Ә" 😎</p>
+
+        <div class="b-day-note">Я помню, что 13 марта у тебя особенный день... 🎂 Жду не меньше тебя!</div>
+        <p style="font-weight: bold; color: #ff6a88; margin-top: 15px;">Всегда рядом ❤️</p>
     </div>
 </div>
-
-<audio id="success-sound" preload="auto">
-    <source src="https://www.myinstants.com/media/sounds/tada.mp3" type="audio/mpeg">
-</audio>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
 <script>
-    let currentStep = 0;
-    const questions = [
-        "Вы точно-точно уверены? 🤔",
-        "Обещаете, что вам понравится? 😉",
-        "Тогда жмите последний раз! 👇"
+    let step = 0;
+    const messages = [
+        "Мой лучик солнца ☀️",
+        "Моя Лара Джи (обожаю этот фильм с тобой!) 🎬",
+        "Самая милая и неповторимая... 🥰",
+        "Ты — причина моей улыбки каждый день ✨",
+        "Готова увидеть главный сюрприз? 💖"
     ];
 
-    function handleYes() {
-        const btn = document.getElementById('yes-btn');
-        const text = document.getElementById('question-text');
-        const sound = document.getElementById('success-sound');
+    function nextStep() {
+        const btn = document.getElementById('action-btn');
+        const msg = document.getElementById('main-message');
+        const title = document.getElementById('title-text');
 
-        // Для iOS: пытаемся "разбудить" аудио движок первым же кликом
-        sound.play().then(() => {
-            sound.pause();
-            sound.currentTime = 0;
-        }).catch(() => {});
+        // Эффект конфетти при каждом шаге
+        confetti({
+            particleCount: 25,
+            spread: 40,
+            origin: { y: 0.7 },
+            colors: ['#ff6a88', '#ff99ac', '#ffffff']
+        });
 
-        if (currentStep < questions.length) {
-            // Эффект нажатия
-            confetti({ 
-                particleCount: 40, 
-                spread: 50, 
-                origin: { y: 0.8 },
-                disableForReducedMotion: true 
-            });
-
-            text.innerText = questions[currentStep];
-            currentStep++;
+        if (step < messages.length) {
+            // Меняем текст
+            msg.style.opacity = 0;
+            setTimeout(() => {
+                msg.innerText = messages[step];
+                msg.style.opacity = 1;
+                step++;
+                
+                // На последнем шаге меняем текст кнопки
+                if (step === messages.length) {
+                    btn.innerText = "ОТКРЫТЬ ПОЛНОСТЬЮ ❤️";
+                    btn.style.background = "linear-gradient(45deg, #d4418e, #ff0055)";
+                }
+            }, 200);
         } else {
             showFinal();
         }
     }
 
     function showFinal() {
-        document.getElementById('step-content').style.display = 'none';
-        document.getElementById('final-screen').style.display = 'block';
-        
-        // Звук финала
-        const sound = document.getElementById('success-sound');
-        sound.play().catch(e => console.log("Safari sound block"));
+        document.getElementById('interactive-part').style.display = 'none';
+        const final = document.getElementById('final-screen');
+        final.style.display = 'block';
+        setTimeout(() => final.style.opacity = 1, 50);
 
-        // Мощный финал конфетти (адаптировано)
-        const duration = 4 * 1000;
-        const end = Date.now() + duration;
-
+        // Праздничный салют
+        var end = Date.now() + (4 * 1000);
         (function frame() {
-            confetti({ particleCount: 2, angle: 60, spread: 55, origin: { x: 0, y: 0.7 } });
-            confetti({ particleCount: 2, angle: 120, spread: 55, origin: { x: 1, y: 0.7 } });
+            confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 } });
+            confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 } });
             if (Date.now() < end) requestAnimationFrame(frame);
         }());
 
-        setInterval(spawnHeart, 400);
+        setInterval(spawnEmoji, 300);
     }
 
-    function spawnHeart() {
-        const heart = document.createElement('div');
-        heart.className = 'floating-heart';
-        heart.innerText = '❤️';
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 4000);
+    function spawnEmoji() {
+        const emoji = document.createElement('div');
+        emoji.className = 'floating-element';
+        const types = ['❤️', '💖', '🌸', '🌹', '✨', '💎'];
+        emoji.innerText = types[Math.floor(Math.random() * types.length)];
+        emoji.style.left = Math.random() * 100 + 'vw';
+        emoji.style.fontSize = (Math.random() * 20 + 20) + 'px';
+        document.body.appendChild(emoji);
+        setTimeout(() => emoji.remove(), 5000);
     }
 </script>
 
