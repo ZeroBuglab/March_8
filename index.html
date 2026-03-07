@@ -3,218 +3,239 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Для моей самой особенной ✨</title>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Caveat:wght@700&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+    <title>Для моей Лары Джи ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Caveat:wght@600&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
         :root {
-            --rose: #ffafbd;
-            --gold: #d4af37;
-            --soft-white: #fffafa;
+            --accent: #ff4d6d;
+            --soft-gold: #f4d35e;
+            --bg: #fff5f8;
         }
 
-        * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
+        * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; outline: none; }
 
         body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
+            margin: 0; padding: 0;
+            background: var(--bg);
+            height: 100vh; display: flex;
+            justify-content: center; align-items: center;
             font-family: 'Montserrat', sans-serif;
             overflow: hidden;
+            background: radial-gradient(circle at center, #ffffff 0%, #ffeef2 100%);
+        }
+
+        /* Декоративные круги на фоне */
+        .circle {
+            position: absolute; border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255, 77, 109, 0.1), rgba(255, 192, 203, 0.1));
+            z-index: 1; pointer-events: none;
         }
 
         #card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             padding: 40px 25px;
-            border-radius: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            width: 90%;
-            max-width: 400px;
+            border-radius: 45px;
+            box-shadow: 0 30px 60px rgba(255, 77, 109, 0.15);
+            width: 88%; max-width: 380px;
             text-align: center;
-            border: 2px solid rgba(255, 255, 255, 0.5);
-            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.8);
             z-index: 10;
-            transition: all 0.5s ease;
+            position: relative;
         }
 
         h1 {
             font-family: 'Pacifico', cursive;
-            color: #d4418e;
-            font-size: 26px;
-            margin-bottom: 20px;
-            line-height: 1.4;
+            color: var(--accent);
+            font-size: 24px; margin: 0 0 25px 0;
+            opacity: 0; transform: translateY(-20px);
         }
 
-        .message-text {
+        #message-area {
             font-family: 'Caveat', cursive;
-            font-size: 28px;
-            color: #555;
-            min-height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 30px;
+            font-size: 30px; color: #444;
+            min-height: 120px; display: flex;
+            align-items: center; justify-content: center;
+            margin-bottom: 20px;
         }
 
-        #action-btn {
-            background: linear-gradient(45deg, #ff6a88, #ff99ac);
-            color: white;
-            border: none;
-            padding: 18px 40px;
-            border-radius: 50px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            box-shadow: 0 10px 20px rgba(255, 106, 136, 0.3);
-            transition: transform 0.2s, box-shadow 0.2s;
+        #next-btn {
+            background: linear-gradient(45deg, #ff4d6d, #ff8fa3);
+            color: white; border: none;
+            padding: 20px; border-radius: 25px;
+            font-size: 18px; font-weight: 600;
+            width: 100%; cursor: pointer;
+            box-shadow: 0 10px 25px rgba(255, 77, 109, 0.3);
+            position: relative; overflow: hidden;
         }
 
-        #action-btn:active { transform: scale(0.95); }
+        #final-screen { display: none; opacity: 0; }
 
-        #final-screen { display: none; opacity: 0; transition: opacity 1s ease; }
-
-        .photo-container {
-            margin: 20px auto;
-            position: relative;
-            width: 220px;
-            height: 220px;
+        .photo-frame {
+            width: 200px; height: 200px;
+            margin: 20px auto; position: relative;
+            border-radius: 50%; padding: 8px;
+            background: linear-gradient(45deg, var(--accent), var(--soft-gold));
         }
 
-        .photo-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 8px solid white;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        .photo-frame img {
+            width: 100%; height: 100%;
+            object-fit: cover; border-radius: 50%;
+            border: 5px solid white;
         }
 
-        .b-day-note {
-            font-size: 14px;
-            color: #d4418e;
-            font-weight: bold;
-            margin-top: 10px;
-            background: #fff0f5;
-            padding: 5px 10px;
-            border-radius: 10px;
-            display: inline-block;
+        .bday-tag {
+            display: inline-block; padding: 8px 15px;
+            background: rgba(255, 77, 109, 0.1);
+            color: var(--accent); border-radius: 12px;
+            font-weight: bold; font-size: 13px;
+            margin-top: 15px;
+            border: 1px dashed var(--accent);
         }
 
-        .floating-element {
-            position: fixed;
-            pointer-events: none;
-            z-index: 1;
-            animation: floatUp 5s linear forwards;
+        .emoji-float {
+            position: fixed; pointer-events: none;
+            z-index: 5; animation: rise 4s ease-out forwards;
         }
 
-        @keyframes floatUp {
-            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        @keyframes rise {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
+<div class="circle" style="width: 300px; height: 300px; top: -100px; left: -100px;"></div>
+<div class="circle" style="width: 200px; height: 200px; bottom: -50px; right: -50px;"></div>
+
 <div id="card">
-    <div id="interactive-part">
-        <h1 id="title-text">Поздравляю с 8 Марта! ❤️</h1>
-        <div class="message-text" id="main-message">Нажми на кнопку, у меня есть кое-что для тебя...</div>
-        <button id="action-btn" onclick="nextStep()">Продолжить ✨</button>
+    <div id="quest-part">
+        <h1 id="title">С 8 Марта! ❤️</h1>
+        <div id="message-area">Я приготовил для тебя кое-что особенное...</div>
+        <button id="next-btn" onclick="playStep()">Продолжить ✨</button>
     </div>
 
     <div id="final-screen">
-        <h1 style="font-size: 22px;">С праздником, любимая! 🌷</h1>
-        <p style="color: #666; font-size: 15px;">Ты делаешь этот мир ярче. Пусть каждый твой день будет полон тепла!</p>
-        
-        <div class="photo-container">
-            <img src="card.png" alt="Наша фотография">
+        <h1 style="opacity: 1; transform: none; font-size: 22px;">Я всегда рядом ✨</h1>
+        <div class="photo-frame">
+            <img src="card.png" alt="Ты">
         </div>
-
-        <div class="b-day-note">Я помню, что 13 марта у тебя особенный день... 🎂 Жду не меньше тебя!</div>
-        <p style="font-weight: bold; color: #ff6a88; margin-top: 15px;">Всегда рядом ❤️</p>
+        <p style="color: #555; font-size: 15px; padding: 0 10px;">
+            Пусть это видео и этот день напомнят тебе, как ты важна для меня.
+        </p>
+        <div class="bday-tag">Я помню: 13 Марта — Твой День! 🎂🎈</div>
+        <p style="margin-top: 15px; font-family: 'Caveat'; font-size: 24px; color: var(--accent);">
+            Поздравляю тебя, моя любимая!
+        </p>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
 <script>
+    // Анимация появления карточки через GSAP
+    gsap.to("#card", { duration: 1.5, opacity: 1, y: 0, ease: "back.out(1.7)" });
+    gsap.to("#title", { duration: 1, opacity: 1, y: 0, delay: 0.5 });
+
     let step = 0;
-    const messages = [
-        "Мой лучик солнца ☀️",
-        "Моя Лара Джи (обожаю этот фильм с тобой!) 🎬",
-        "Самая милая и неповторимая... 🥰",
-        "Ты — причина моей улыбки каждый день ✨",
-        "Готова увидеть главный сюрприз? 💖"
+    const phrases = [
+        "Мой самый яркий лучик солнца ☀️",
+        "Моя неповторимая Лара Джи 🎬🍿",
+        "Самая красивая девушка в этом мире...",
+        "Ты вдохновляешь меня каждый день ✨",
+        "Я безумно ценю каждый миг с тобой ❤️"
     ];
 
-    function nextStep() {
-        const btn = document.getElementById('action-btn');
-        const msg = document.getElementById('main-message');
-        const title = document.getElementById('title-text');
-
-        // Эффект конфетти при каждом шаге
-        confetti({
-            particleCount: 25,
-            spread: 40,
-            origin: { y: 0.7 },
-            colors: ['#ff6a88', '#ff99ac', '#ffffff']
-        });
-
-        if (step < messages.length) {
-            // Меняем текст
-            msg.style.opacity = 0;
-            setTimeout(() => {
-                msg.innerText = messages[step];
-                msg.style.opacity = 1;
-                step++;
-                
-                // На последнем шаге меняем текст кнопки
-                if (step === messages.length) {
-                    btn.innerText = "ОТКРЫТЬ ПОЛНОСТЬЮ ❤️";
-                    btn.style.background = "linear-gradient(45deg, #d4418e, #ff0055)";
+    function playStep() {
+        if (step < phrases.length) {
+            // Анимация смены текста через GSAP
+            gsap.to("#message-area", { 
+                duration: 0.4, 
+                opacity: 0, 
+                scale: 0.9,
+                onComplete: () => {
+                    document.getElementById('message-area').innerText = phrases[step];
+                    gsap.to("#message-area", { duration: 0.4, opacity: 1, scale: 1 });
+                    step++;
+                    if(step === phrases.length) {
+                        document.getElementById('next-btn').innerText = "ПОСМОТРЕТЬ ПОДАРОК 🎁";
+                    }
                 }
-            }, 200);
+            });
+
+            // Эффект конфетти при клике
+            confetti({
+                particleCount: 20,
+                spread: 40,
+                origin: { y: 0.8 },
+                colors: ['#ff4d6d', '#ffffff', '#f4d35e']
+            });
+            
+            spawnEmoji();
         } else {
-            showFinal();
+            finalize();
         }
     }
 
-    function showFinal() {
-        document.getElementById('interactive-part').style.display = 'none';
-        const final = document.getElementById('final-screen');
-        final.style.display = 'block';
-        setTimeout(() => final.style.opacity = 1, 50);
+    function finalize() {
+        gsap.to("#quest-part", { 
+            duration: 0.8, 
+            opacity: 0, 
+            display: "none",
+            onComplete: () => {
+                const final = document.getElementById('final-screen');
+                final.style.display = "block";
+                gsap.to(final, { duration: 1, opacity: 1 });
+                
+                // Анимация пульсации фото
+                gsap.to(".photo-frame", { scale: 1.05, repeat: -1, yoyo: true, duration: 2 });
+                
+                startFinalCelebration();
+            }
+        });
+    }
 
-        // Праздничный салют
-        var end = Date.now() + (4 * 1000);
-        (function frame() {
-            confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 } });
-            confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 } });
-            if (Date.now() < end) requestAnimationFrame(frame);
-        }());
+    function startFinalCelebration() {
+        const duration = 15 * 1000;
+        const animationEnd = Date.now() + duration;
 
-        setInterval(spawnEmoji, 300);
+        const interval = setInterval(() => {
+            const timeLeft = animationEnd - Date.now();
+            if (timeLeft <= 0) return clearInterval(interval);
+
+            confetti({
+                particleCount: 2,
+                angle: 60,
+                spread: 55,
+                origin: { x: 0, y: 0.8 },
+                colors: ['#ff4d6d', '#f4d35e']
+            });
+            confetti({
+                particleCount: 2,
+                angle: 120,
+                spread: 55,
+                origin: { x: 1, y: 0.8 },
+                colors: ['#ff4d6d', '#f4d35e']
+            });
+        }, 150);
+        
+        setInterval(spawnEmoji, 400);
     }
 
     function spawnEmoji() {
-        const emoji = document.createElement('div');
-        emoji.className = 'floating-element';
-        const types = ['❤️', '💖', '🌸', '🌹', '✨', '💎'];
-        emoji.innerText = types[Math.floor(Math.random() * types.length)];
-        emoji.style.left = Math.random() * 100 + 'vw';
-        emoji.style.fontSize = (Math.random() * 20 + 20) + 'px';
-        document.body.appendChild(emoji);
-        setTimeout(() => emoji.remove(), 5000);
+        const emojis = ['❤️', '💖', '✨', '🌸', '🌹'];
+        const el = document.createElement('div');
+        el.className = 'emoji-float';
+        el.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        el.style.left = Math.random() * 100 + 'vw';
+        el.style.fontSize = (Math.random() * 20 + 20) + 'px';
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 4000);
     }
 </script>
-
 </body>
 </html>
