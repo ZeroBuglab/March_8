@@ -3,103 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Для моей Лары Джин Кови ✨</title>
+    <title>Для Биби жаным ✨</title>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Caveat:wght@600&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
-        :root {
-            --accent: #ff4d6d;
-            --soft-gold: #f4d35e;
-            --bg: #fff5f8;
-        }
-
-        * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; outline: none; }
-
+        :root { --accent: #ff4d6d; --bg: #fff5f8; }
+        * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
         body {
-            margin: 0; padding: 0;
-            background: var(--bg);
-            height: 100vh; display: flex;
-            justify-content: center; align-items: center;
-            font-family: 'Montserrat', sans-serif;
-            overflow: hidden;
+            margin: 0; padding: 0; background: var(--bg); height: 100vh;
+            display: flex; justify-content: center; align-items: center;
+            font-family: 'Montserrat', sans-serif; overflow: hidden;
             background: radial-gradient(circle at center, #ffffff 0%, #ffeef2 100%);
         }
-
-        /* Декоративные круги на фоне */
-        .circle {
-            position: absolute; border-radius: 50%;
-            background: linear-gradient(135deg, rgba(255, 77, 109, 0.1), rgba(255, 192, 203, 0.1));
-            z-index: 1; pointer-events: none;
-        }
-
         #card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 40px 25px;
-            border-radius: 45px;
-            box-shadow: 0 30px 60px rgba(255, 77, 109, 0.15);
-            width: 88%; max-width: 380px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            z-index: 10;
-            position: relative;
+            background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px); padding: 30px 20px;
+            border-radius: 35px; box-shadow: 0 20px 50px rgba(255, 77, 109, 0.2);
+            width: 90%; max-width: 380px; text-align: center;
+            border: 1px solid white; z-index: 10;
         }
-
-        h1 {
-            font-family: 'Pacifico', cursive;
-            color: var(--accent);
-            font-size: 24px; margin: 0 0 25px 0;
-            opacity: 0; transform: translateY(-20px);
-        }
-
+        h1 { font-family: 'Pacifico', cursive; color: var(--accent); font-size: 22px; margin-bottom: 20px; }
         #message-area {
-            font-family: 'Caveat', cursive;
-            font-size: 30px; color: #444;
-            min-height: 120px; display: flex;
-            align-items: center; justify-content: center;
-            margin-bottom: 20px;
+            font-family: 'Caveat', cursive; font-size: 28px; color: #444;
+            min-height: 100px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;
         }
-
         #next-btn {
-            background: linear-gradient(45deg, #ff4d6d, #ff8fa3);
-            color: white; border: none;
-            padding: 20px; border-radius: 25px;
-            font-size: 18px; font-weight: 600;
-            width: 100%; cursor: pointer;
-            box-shadow: 0 10px 25px rgba(255, 77, 109, 0.3);
-            position: relative; overflow: hidden;
+            background: linear-gradient(45deg, #ff4d6d, #ff8fa3); color: white; border: none;
+            padding: 18px; border-radius: 20px; font-size: 18px; font-weight: 600;
+            width: 100%; cursor: pointer; box-shadow: 0 10px 20px rgba(255, 77, 109, 0.2);
         }
-
-        #final-screen { display: none; opacity: 0; }
-
-        .photo-frame {
-            width: 200px; height: 200px;
-            margin: 20px auto; position: relative;
-            border-radius: 50%; padding: 8px;
-            background: linear-gradient(45deg, var(--accent), var(--soft-gold));
+        #final-screen { display: none; opacity: 0; width: 100%; }
+        .photo-container {
+            width: 100%; margin-top: 10px; border-radius: 15px;
+            overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 2px solid white;
         }
-
-        .photo-frame img {
-            width: 100%; height: 100%;
-            object-fit: cover; border-radius: 50%;
-            border: 5px solid white;
-        }
-
-        .bday-tag {
-            display: inline-block; padding: 8px 15px;
-            background: rgba(255, 77, 109, 0.1);
-            color: var(--accent); border-radius: 12px;
-            font-weight: bold; font-size: 13px;
-            margin-top: 15px;
-            border: 1px dashed var(--accent);
-        }
-
-        .emoji-float {
-            position: fixed; pointer-events: none;
-            z-index: 5; animation: rise 4s ease-out forwards;
-        }
-
+        .photo-container img { width: 100%; height: auto; display: block; }
+        .emoji-float { position: fixed; pointer-events: none; z-index: 5; animation: rise 4s linear forwards; }
         @keyframes rise {
             0% { transform: translateY(100vh) scale(0); opacity: 0; }
             20% { opacity: 1; }
@@ -109,128 +49,69 @@
 </head>
 <body>
 
-<div class="circle" style="width: 300px; height: 300px; top: -100px; left: -100px;"></div>
-<div class="circle" style="width: 200px; height: 200px; bottom: -50px; right: -50px;"></div>
-
 <div id="card">
     <div id="quest-part">
         <h1 id="title">С 8 Марта! ❤️</h1>
-        <div id="message-area">Я приготовил для тебя кое-что особенное </div>
-        <button id="next-btn" onclick="playStep()">Продолжить ✨</button>
+        <div id="message-area">У меня есть кое-что для тебя...</div>
+        <button id="next-btn" onclick="playStep()">Нажми сюда ✨</button>
     </div>
 
     <div id="final-screen">
-        <h1 style="opacity: 1; transform: none; font-size: 22px;">Я всегда рядом ✨</h1>
-        <div class="photo-frame">
-            <img src="card.png" alt="Ты">
+        <h1 style="font-size: 20px;">Моей Ларе Джин... 📝</h1>
+        <div class="photo-container">
+            <img src="card.png" id="letter-img" alt="Письмо для тебя">
         </div>
-        <p style="color: #555; font-size: 15px; padding: 0 10px;">
-            тут на фоте оставлю пару слов )
-        </p>
-        <div class="bday-tag">Я помню: 13 Марта — Твой День! 🎂🎈 сделаю чет прикольное </div>
-        <p style="margin-top: 15px; font-family: 'Caveat'; font-size: 24px; color: var(--accent);">
-            Поздравляю тебя, Бибижан!
-        </p>
+        <p style="font-size: 12px; color: #999; margin-top: 10px;">(нажми на письмо, чтобы приблизить)</p>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
 <script>
-    // Анимация появления карточки через GSAP
-    gsap.to("#card", { duration: 1.5, opacity: 1, y: 0, ease: "back.out(1.7)" });
-    gsap.to("#title", { duration: 1, opacity: 1, y: 0, delay: 0.5 });
-
     let step = 0;
     const phrases = [
         "Мой самый яркий лучик солнца ☀️",
-        "Моя неповторимая Лара Джин Кови 🎬🍿",
-        "Самая красивая девушка в этом мире...",
-        "Ты вдохновляешь меня каждый день ✨",
-        "Я безумно ценю каждый миг проведенные с тобой ❤️"
+        "Моя неповторимая Лара Джин Кови 🎬",
+        "Ты вдохновляешь меня каждый день",
+        "Самая красивая девушка в мире❤️",
+        "Я безумно ценю каждый миг с тобой ❤️"
     ];
 
     function playStep() {
         if (step < phrases.length) {
-            // Анимация смены текста через GSAP
             gsap.to("#message-area", { 
-                duration: 0.4, 
-                opacity: 0, 
-                scale: 0.9,
+                duration: 0.3, opacity: 0, y: -10,
                 onComplete: () => {
                     document.getElementById('message-area').innerText = phrases[step];
-                    gsap.to("#message-area", { duration: 0.4, opacity: 1, scale: 1 });
+                    gsap.to("#message-area", { duration: 0.3, opacity: 1, y: 0 });
                     step++;
-                    if(step === phrases.length) {
-                        document.getElementById('next-btn').innerText = "ПОСМОТРЕТЬ ПОДАРОК 🎁";
-                    }
+                    if(step === phrases.length) document.getElementById('next-btn').innerText = "ОТКРЫТЬ ПИСЬМО ✨";
                 }
             });
-
-            // Эффект конфетти при клике
-            confetti({
-                particleCount: 20,
-                spread: 40,
-                origin: { y: 0.8 },
-                colors: ['#ff4d6d', '#ffffff', '#f4d35e']
-            });
-            
-            spawnEmoji();
+            confetti({ particleCount: 20, spread: 50, origin: { y: 0.8 }, colors: ['#ff4d6d', '#ffffff'] });
         } else {
-            finalize();
+            showLetter();
         }
     }
 
-    function finalize() {
-        gsap.to("#quest-part", { 
-            duration: 0.8, 
-            opacity: 0, 
-            display: "none",
-            onComplete: () => {
-                const final = document.getElementById('final-screen');
-                final.style.display = "block";
-                gsap.to(final, { duration: 1, opacity: 1 });
-                
-                // Анимация пульсации фото
-                gsap.to(".photo-frame", { scale: 1.05, repeat: -1, yoyo: true, duration: 2 });
-                
-                startFinalCelebration();
-            }
-        });
-    }
-
-    function startFinalCelebration() {
-        const duration = 15 * 1000;
-        const animationEnd = Date.now() + duration;
-
-        const interval = setInterval(() => {
-            const timeLeft = animationEnd - Date.now();
-            if (timeLeft <= 0) return clearInterval(interval);
-
-            confetti({
-                particleCount: 2,
-                angle: 60,
-                spread: 55,
-                origin: { x: 0, y: 0.8 },
-                colors: ['#ff4d6d', '#f4d35e']
-            });
-            confetti({
-                particleCount: 2,
-                angle: 120,
-                spread: 55,
-                origin: { x: 1, y: 0.8 },
-                colors: ['#ff4d6d', '#f4d35e']
-            });
-        }, 150);
-        
-        setInterval(spawnEmoji, 400);
+    function showLetter() {
+        gsap.to("#quest-part", { duration: 0.5, opacity: 0, display: "none", onComplete: () => {
+            const final = document.getElementById('final-screen');
+            final.style.display = "block";
+            gsap.to(final, { duration: 1, opacity: 1 });
+            
+            // Запуск сердечек
+            setInterval(spawnEmoji, 500);
+            
+            // Финальный салют
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+        }});
     }
 
     function spawnEmoji() {
-        const emojis = ['❤️', '💖', '✨', '🌸', '🌹'];
         const el = document.createElement('div');
         el.className = 'emoji-float';
-        el.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        el.innerText = '❤️';
         el.style.left = Math.random() * 100 + 'vw';
         el.style.fontSize = (Math.random() * 20 + 20) + 'px';
         document.body.appendChild(el);
