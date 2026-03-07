@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Для Бики жаным ✨</title>
+    <title>Для Бика жаным </title>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Caveat:wght@600&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
@@ -16,10 +16,10 @@
             background: radial-gradient(circle at center, #ffffff 0%, #ffeef2 100%);
         }
         #card {
-            background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px); padding: 30px 20px;
             border-radius: 35px; box-shadow: 0 20px 50px rgba(255, 77, 109, 0.2);
-            width: 90%; max-width: 380px; text-align: center;
+            width: 92%; max-width: 380px; text-align: center;
             border: 1px solid white; z-index: 10;
         }
         h1 { font-family: 'Pacifico', cursive; color: var(--accent); font-size: 22px; margin-bottom: 20px; }
@@ -31,30 +31,25 @@
             background: linear-gradient(45deg, #ff4d6d, #ff8fa3); color: white; border: none;
             padding: 18px; border-radius: 20px; font-size: 18px; font-weight: 600;
             width: 100%; cursor: pointer; box-shadow: 0 10px 20px rgba(255, 77, 109, 0.2);
+            transition: transform 0.2s;
         }
+        #next-btn:active { transform: scale(0.95); }
         #final-screen { display: none; opacity: 0; width: 100%; }
         
-        /* Стили для контейнера фото */
         .photo-container {
             width: 100%; margin-top: 10px; border-radius: 15px;
             overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border: 2px solid white; cursor: zoom-in;
-            transition: transform 0.3s ease;
+            border: 2px solid white; cursor: pointer;
         }
-        .photo-container:active { transform: scale(0.98); }
         .photo-container img { width: 100%; height: auto; display: block; }
 
-        /* Стили для полноэкранного просмотра */
         #fullscreen-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); z-index: 100;
+            background: rgba(0,0,0,0.95); z-index: 100;
             justify-content: center; align-items: center; opacity: 0;
         }
-        #fullscreen-overlay img { max-width: 95%; max-height: 95%; border-radius: 10px; }
-        #close-overlay {
-            position: absolute; top: 20px; right: 20px; color: white;
-            font-size: 30px; font-weight: bold; cursor: pointer; font-family: sans-serif;
-        }
+        #fullscreen-overlay img { max-width: 98%; max-height: 90%; border-radius: 5px; }
+        #close-hint { position: absolute; bottom: 30px; color: white; font-size: 14px; opacity: 0.7; }
 
         .emoji-float { position: fixed; pointer-events: none; z-index: 5; animation: rise 4s linear forwards; }
         @keyframes rise {
@@ -66,6 +61,8 @@
 </head>
 <body>
 
+<audio id="bg-music" src="vals.mp3" preload="auto" loop></audio>
+
 <div id="card">
     <div id="quest-part">
         <h1 id="title">С 8 Марта! ❤️</h1>
@@ -76,15 +73,17 @@
     <div id="final-screen">
         <h1 style="font-size: 20px;">Моей жанымке 📝</h1>
         <div class="photo-container" onclick="openFull()">
-            <img src="card.png" id="letter-img" alt="Письмо для тебя">
+            <img src="card.png" id="letter-img" alt="Твое письмо">
         </div>
-        <p style="font-size: 14px; color: var(--accent); font-weight: bold; margin-top: 15px;">Нажми на письмо, чтобы прочитать ❤️</p>
+        <p style="font-size: 13px; color: var(--accent); font-weight: bold; margin-top: 15px; font-family: 'Caveat'; font-size: 20px;">
+            Нажми на письмо, чтобы прочитать полностью ❤️
+        </p>
     </div>
 </div>
 
 <div id="fullscreen-overlay" onclick="closeFull()">
-    <span id="close-overlay">&times;</span>
-    <img src="card.png" alt="Письмо">
+    <img src="card.png" alt="Письмо на весь экран">
+    <div id="close-hint">Нажми в любое место, чтобы закрыть</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
@@ -92,14 +91,20 @@
 <script>
     let step = 0;
     const phrases = [
-        "Мой самый яркий лучик солнца ☀️",
-        "Моя неповторимая Лара Джин Кови 🎬",
-        "Ты вдохновляешь меня каждый день",
-        "Самая красивая девушка в мире❤️",
-        "Я безумно ценю каждый миг с тобой ❤️"
+        "Мой самый яркий лучик солнца ☀️", 
+        "Моя неповторимая Лара Джин 🎬🍿",  
+        "Ты вдохновляешь меня каждый день🥰", 
+        "Самая красивая девушка в мире❤️", 
+        "Я безумно ценю каждый миг с тобой ❤️"  
     ];
 
     function playStep() {
+        // Запуск музыки при первом клике (обязательно для телефонов)
+        const music = document.getElementById('bg-music');
+        if (music.paused) {
+            music.play().catch(e => console.log("Ждем взаимодействия для музыки"));
+        }
+
         if (step < phrases.length) {
             gsap.to("#message-area", { 
                 duration: 0.3, opacity: 0, y: -10,
@@ -110,7 +115,7 @@
                     if(step === phrases.length) document.getElementById('next-btn').innerText = "ОТКРЫТЬ ПИСЬМО ✨";
                 }
             });
-            confetti({ particleCount: 20, spread: 50, origin: { y: 0.8 }, colors: ['#ff4d6d', '#ffffff'] });
+            confetti({ particleCount: 15, spread: 40, origin: { y: 0.8 }, colors: ['#ff4d6d', '#ffffff'] });
         } else {
             showLetter();
         }
