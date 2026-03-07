@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Для Биби жаным ✨</title>
+    <title>Для Бики жаным ✨</title>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Caveat:wght@600&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
@@ -33,12 +33,29 @@
             width: 100%; cursor: pointer; box-shadow: 0 10px 20px rgba(255, 77, 109, 0.2);
         }
         #final-screen { display: none; opacity: 0; width: 100%; }
+        
+        /* Стили для контейнера фото */
         .photo-container {
             width: 100%; margin-top: 10px; border-radius: 15px;
             overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border: 2px solid white;
+            border: 2px solid white; cursor: zoom-in;
+            transition: transform 0.3s ease;
         }
+        .photo-container:active { transform: scale(0.98); }
         .photo-container img { width: 100%; height: auto; display: block; }
+
+        /* Стили для полноэкранного просмотра */
+        #fullscreen-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 100;
+            justify-content: center; align-items: center; opacity: 0;
+        }
+        #fullscreen-overlay img { max-width: 95%; max-height: 95%; border-radius: 10px; }
+        #close-overlay {
+            position: absolute; top: 20px; right: 20px; color: white;
+            font-size: 30px; font-weight: bold; cursor: pointer; font-family: sans-serif;
+        }
+
         .emoji-float { position: fixed; pointer-events: none; z-index: 5; animation: rise 4s linear forwards; }
         @keyframes rise {
             0% { transform: translateY(100vh) scale(0); opacity: 0; }
@@ -58,11 +75,16 @@
 
     <div id="final-screen">
         <h1 style="font-size: 20px;">Моей Ларе Джин... 📝</h1>
-        <div class="photo-container">
+        <div class="photo-container" onclick="openFull()">
             <img src="card.png" id="letter-img" alt="Письмо для тебя">
         </div>
-        <p style="font-size: 12px; color: #999; margin-top: 10px;">(нажми на письмо, чтобы приблизить)</p>
+        <p style="font-size: 14px; color: var(--accent); font-weight: bold; margin-top: 15px;">Нажми на письмо, чтобы прочитать ❤️</p>
     </div>
+</div>
+
+<div id="fullscreen-overlay" onclick="closeFull()">
+    <span id="close-overlay">&times;</span>
+    <img src="card.png" alt="Письмо">
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
@@ -71,7 +93,7 @@
     let step = 0;
     const phrases = [
         "Мой самый яркий лучик солнца ☀️",
-        "Моя неповторимая Лара Джин Кови 🎬",
+        "Моя неповторимая Лара Джи 🎬",
         "Ты вдохновляешь меня каждый день",
         "Самая красивая девушка в мире❤️",
         "Я безумно ценю каждый миг с тобой ❤️"
@@ -99,13 +121,20 @@
             const final = document.getElementById('final-screen');
             final.style.display = "block";
             gsap.to(final, { duration: 1, opacity: 1 });
-            
-            // Запуск сердечек
             setInterval(spawnEmoji, 500);
-            
-            // Финальный салют
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
         }});
+    }
+
+    function openFull() {
+        const overlay = document.getElementById('fullscreen-overlay');
+        overlay.style.display = 'flex';
+        gsap.to(overlay, { duration: 0.4, opacity: 1 });
+    }
+
+    function closeFull() {
+        const overlay = document.getElementById('fullscreen-overlay');
+        gsap.to(overlay, { duration: 0.3, opacity: 0, onComplete: () => overlay.style.display = 'none' });
     }
 
     function spawnEmoji() {
